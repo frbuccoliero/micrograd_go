@@ -68,7 +68,11 @@ func (a *Value) Negate() *Value {
 }
 
 func (a *Value) Invert() *Value {
-	return NewValue(1/a.data, *Value[]{a}, "^-1") // assuming no zero division
+	out := NewValue(1/a.data, []*Value{a}, "^-1")
+	out.backward = func() {
+		a.grad += (-1.0 / (math.Pow(a.data , 2))) * out.grad
+	}
+	return out
 }
 
 func (a *Value) Sub(b *Value) *Value{
