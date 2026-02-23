@@ -5,6 +5,8 @@ import (
 	"micrograd_go/engine"
 )
 
+// NEURON
+
 type Neuron struct {
 	w []*engine.Value
 	b *engine.Value
@@ -38,3 +40,28 @@ func (a *Neuron) Activate (input []*engine.Value) *engine.Value {
 		return out
 	}
 }
+
+// LAYER
+
+type Layer struct {
+	in int
+	out int
+	neurons []*Neuron
+}
+
+func NewLayer(in int, out int, nl string) *Layer {
+	neurons := make([]*Neuron, out)
+	for i := 0; i < out; i++ {
+		neurons[i] = NewNeuron(in,nl)
+	}
+	return &Layer{in:in, out:out, neurons: neurons}
+}
+
+func (a *Layer) Activate (input []*engine.Value) []*engine.Value {
+	out := make([]*engine.Value, a.out)
+	for i := 0; i < a.out; i++ {
+		out[i] = a.neurons[i].Activate(input)
+	}
+	return out
+}
+

@@ -59,8 +59,12 @@ func main() {
     c = engine.NewValue(3.0, nil, "c")
 
     n := nn.NewNeuron(2, "tanh")
-    out := n.Activate([]*engine.Value{a,b})
-    out.Print()
+    out1 := n.Activate([]*engine.Value{a,b})
+    out1.Print()
+
+    l := nn.NewLayer(2, 1, "tanh")
+    out2 := l.Activate([]*engine.Value{a,b})
+    out2[0].Print() // must squeeze to print
 
 
 }
