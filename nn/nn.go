@@ -65,3 +65,33 @@ func (a *Layer) Activate (input []*engine.Value) []*engine.Value {
 	return out
 }
 
+// MLP
+
+type MLP struct {
+	layers []*Layer
+}
+
+func NewMLP(in int, layersSize []int, nl string) *MLP {
+	layers := make([]*Layer, len(layersSize))
+
+	prevSize := in
+
+	for i, size := range layersSize {
+		nlLayer := nl
+		if i == len(layersSize)-1 {
+			nlLayer = "" // no activation on last layer
+		}
+
+		layers[i] = NewLayer(prevSize, size, nlLayer)
+		prevSize = size
+	}
+
+	return &MLP{layers: layers}
+}
+
+func (a *MLP) Activate(input []*engine.Value) []*engine.Value {
+	for _, layer := range a.layers{
+		input = layer.Activate(input)
+	}
+	return input
+}

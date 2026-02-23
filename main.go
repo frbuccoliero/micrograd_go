@@ -66,5 +66,7 @@ func main() {
     out2 := l.Activate([]*engine.Value{a,b})
     out2[0].Print() // must squeeze to print
 
-
+    mlp := nn.NewMLP(2, []int{3,4,1}, "tanh")
+    out3 := mlp.Activate([]*engine.Value{a,b})
+    out3[0].Print()
 }
