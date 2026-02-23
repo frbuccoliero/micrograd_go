@@ -3,9 +3,12 @@ package main
 import (
     "fmt"
 	"micrograd_go/engine"
+    "micrograd_go/nn"
 )
 
 func main() {
+    fmt.Println("--- TESTING ENGINE ---")
+
 	a := engine.NewValue(1.0, nil, "a")
 	b := engine.NewValue(2.0, nil, "b")
     
@@ -48,5 +51,16 @@ func main() {
     for _,v := range all_vars {
         v.Print()
     }
+
+    fmt.Println("--- TESTING MLP ---")
+
+    a = engine.NewValue(1.0, nil, "a")
+	b = engine.NewValue(2.0, nil, "b")
+    c = engine.NewValue(3.0, nil, "c")
+
+    n := nn.NewNeuron(2, "tanh")
+    out := n.Activate([]*engine.Value{a,b})
+    out.Print()
+
 
 }

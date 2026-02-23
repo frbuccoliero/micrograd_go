@@ -35,7 +35,7 @@ func (a *Value) Mul(b *Value) *Value {
 	return out
 }
 
-func (a *Value) ReLu() *Value {
+func (a *Value) ReLU() *Value {
 	var res float64
 	if a.data > 0 {
 		res = a.data
